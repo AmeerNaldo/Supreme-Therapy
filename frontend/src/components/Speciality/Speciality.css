@@ -1,0 +1,48 @@
+.specialities {
+  margin: 0 auto;
+  box-sizing: border-box;
+  max-width: 780px;
+  margin-top: 90px;
+}
+
+.specialities h1 {
+  font-weight: bold;
+  color: #c90000;
+  font-size: 48px;
+  margin-bottom: 32px;
+}
+
+.specialities-title,
+.specialities-para {
+  text-align: center;
+}
+
+.specialities p {
+  margin-bottom: 32px;
+  font-size: 24px;
+}
+
+.speciality-img {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 64px;
+  justify-content: center;
+  margin-top: 48px;
+}
+
+.speciality-img img {
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+}
+
+
+@media (max-width: 550px) {
+  .specialities h1 {
+    font-size: 28px;
+  }
+
+  .specialities p {
+    font-size: 18px;
+  }
+}
