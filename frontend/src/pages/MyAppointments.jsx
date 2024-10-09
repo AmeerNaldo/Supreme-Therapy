@@ -56,7 +56,7 @@ const MyAppointments = () => {
       if (data.success) {
         toast.success(data.message);
         getUserAppointments();
-        getDoctorsData()
+        getDoctorsData();
       } else {
         toast.error(data.message);
       }
@@ -64,6 +64,20 @@ const MyAppointments = () => {
       console.log(error);
       toast.error(error.message);
     }
+  };
+
+  const appointmentStripe = async (appointmentId) => {
+    try {
+      const { data } = await axios.post(
+        backendUrl + "/api/user/payment-stripepay",
+        { appointmentId },
+        { headers: { token } }
+      );
+
+      if (data.success) {
+        console.log(data.order);
+      }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -108,7 +122,10 @@ const MyAppointments = () => {
             <div></div>
             <div className="flex flex-col gap-2 justify-end">
               {!item.cancelled && (
-                <button className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border hover:bg-green-500 hover:text-white transition-all duration-300">
+                <button
+                  onClick={() => appointmentStripe(item._id)}
+                  className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border hover:bg-green-500 hover:text-white transition-all duration-300"
+                >
                   Pay Online
                 </button>
               )}
@@ -120,7 +137,11 @@ const MyAppointments = () => {
                   Cancel Appointment
                 </button>
               )}
-              {item.cancelled && <button className="sm:min-w-48 py-2 border border-red-500 rounded text-red-500">Appointment cancelled</button>}
+              {item.cancelled && (
+                <button className="sm:min-w-48 py-2 border border-red-500 rounded text-red-500">
+                  Appointment cancelled
+                </button>
+              )}
             </div>
           </div>
         ))}
