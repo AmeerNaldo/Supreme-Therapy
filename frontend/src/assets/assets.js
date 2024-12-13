@@ -15,7 +15,7 @@ import info_icon from "./info_icon.svg";
 import upload_icon from "./upload_icon.png";
 import stripe_logo from "./stripe_logo.png";
 import razorpay_logo from "./razorpay_logo.png";
-import doc1 from "./doc1.png";
+import doc1 from "./doc1.jpg";
 import doc2 from "./doc2.jpg";
 
 export const assets = {

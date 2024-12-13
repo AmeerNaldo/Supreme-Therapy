@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useNavigate } from "react";
 import { AppContext } from "../context/AppContext";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -29,6 +29,8 @@ const MyAppointments = () => {
       dateArray[0] + " " + months[Number(dateArray[1])] + " " + dateArray[2]
     );
   };
+
+  const navigate = useNavigate()
 
   const getUserAppointments = async () => {
     try {
@@ -66,6 +68,26 @@ const MyAppointments = () => {
     }
   };
 
+  const initPay = (order) => {
+    const options = {
+      key: VITE_STRIPE_KEY_ID,
+      amount: order.amount,
+      currency: order.currency,
+      name: 'Appointment Payment',
+      description: 'Appointment Payment',
+      order_id: order.id,
+      receipt: order.receipt,
+      handler: async (res) => {
+        console.log(response)
+
+
+      }
+    }
+
+    const asp = new window.Stripe(options)
+    asp.open()
+  }
+
   const appointmentStripe = async (appointmentId) => {
     try {
       const { data } = await axios.post(
@@ -85,6 +107,7 @@ const MyAppointments = () => {
       getUserAppointments();
     }
   }, [token]);
+
 
   return (
     <div>
@@ -121,14 +144,6 @@ const MyAppointments = () => {
             </div>
             <div></div>
             <div className="flex flex-col gap-2 justify-end">
-              {!item.cancelled && (
-                <button
-                  onClick={() => appointmentStripe(item._id)}
-                  className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border hover:bg-green-500 hover:text-white transition-all duration-300"
-                >
-                  Pay Online
-                </button>
-              )}
               {!item.cancelled && (
                 <button
                   onClick={() => cancelAppointment(item._id)}
