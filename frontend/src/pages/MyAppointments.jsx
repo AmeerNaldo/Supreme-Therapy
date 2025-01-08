@@ -30,7 +30,7 @@ const MyAppointments = () => {
     );
   };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const getUserAppointments = async () => {
     try {
@@ -68,46 +68,11 @@ const MyAppointments = () => {
     }
   };
 
-  const initPay = (order) => {
-    const options = {
-      key: VITE_STRIPE_KEY_ID,
-      amount: order.amount,
-      currency: order.currency,
-      name: 'Appointment Payment',
-      description: 'Appointment Payment',
-      order_id: order.id,
-      receipt: order.receipt,
-      handler: async (res) => {
-        console.log(response)
-
-
-      }
-    }
-
-    const asp = new window.Stripe(options)
-    asp.open()
-  }
-
-  const appointmentStripe = async (appointmentId) => {
-    try {
-      const { data } = await axios.post(
-        backendUrl + "/api/user/payment-stripepay",
-        { appointmentId },
-        { headers: { token } }
-      );
-
-      if (data.success) {
-        console.log(data.order);
-      }
-    } catch (error) {}
-  };
-
   useEffect(() => {
     if (token) {
       getUserAppointments();
     }
   }, [token]);
-
 
   return (
     <div>
@@ -144,7 +109,7 @@ const MyAppointments = () => {
             </div>
             <div></div>
             <div className="flex flex-col gap-2 justify-end">
-              {!item.cancelled && (
+              {!item.cancelled && !item.isCompleted &&  (
                 <button
                   onClick={() => cancelAppointment(item._id)}
                   className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border hover:bg-primary hover:text-white transition-all duration-300"
@@ -152,11 +117,12 @@ const MyAppointments = () => {
                   Cancel Appointment
                 </button>
               )}
-              {item.cancelled && (
+              {item.cancelled && !item.isCompleted && (
                 <button className="sm:min-w-48 py-2 border border-red-500 rounded text-red-500">
                   Appointment cancelled
                 </button>
               )}
+              {item.isCompleted && <button className="sm:min-w-48 py-2 border border-green-500 rounded text-green-500">Completed</button>}
             </div>
           </div>
         ))}

@@ -57,7 +57,7 @@ export const doctors = [
   {
     _id: "doc2",
     name: "Dr. Waseem Abdelhadi",
-    image: doc1,
+    image: doc2,
     speciality: "Doctor in Physical Therapy",
     degree: "Student",
     experience: "3 Years",
