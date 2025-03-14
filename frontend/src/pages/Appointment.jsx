@@ -64,6 +64,7 @@ const Appointment = () => {
 
         const slotDate = day + "_" + month + "_" + year;
         const slotTime = formattedTime;
+        console.log("docInfo" + docInfo);
 
         const isSlotAvailable =
           docInfo.slots_booked[slotDate] &&
@@ -110,7 +111,7 @@ const Appointment = () => {
       if (data.success) {
         toast.success(data.message);
         getDoctorsData();
-        navigate("/my-appointments");
+        return navigate("/my-appointments");
       } else {
         toast.error(data.message);
       }
